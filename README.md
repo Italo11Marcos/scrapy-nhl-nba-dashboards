@@ -12,3 +12,6 @@ Red Wings x Avalanche teve uma diferença no placar de 3 gols
 Panthers x Wild teve uma diferença no placar de 1 gols
 ```
 
+ Erros conhecidos
+
+Haverá erro toda vez que for o primeiro dia do mês, mas será corrigido o mais breve possível.
