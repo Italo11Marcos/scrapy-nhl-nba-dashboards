@@ -57,6 +57,7 @@ def index():
         dia = data.strftime("%d") #str(data.day)
         diaAnterior = int(dia)-1
         dia = str(diaAnterior)
+        dia = "0"+dia
 
         datetime = ano+mes+dia
 
@@ -68,7 +69,7 @@ def index():
 
         print(data)
 
-        url = 'https://www.espn.com.br/nhl/scoreboard/_/date/{}'.format(data)
+        url = 'https://www.espn.com/nhl/scoreboard/_/date/{}'.format(data)
 
         webScrappingNHL(url)
 
