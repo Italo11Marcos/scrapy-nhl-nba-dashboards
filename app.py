@@ -57,7 +57,7 @@ def index():
         dia = data.strftime("%d") #str(data.day)
         diaAnterior = int(dia)-1
         dia = str(diaAnterior)
-        dia = "0"+dia
+        dia = "0"+dia #adiciona um 0 a esquerda
 
         datetime = ano+mes+dia
 
