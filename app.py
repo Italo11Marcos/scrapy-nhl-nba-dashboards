@@ -38,7 +38,7 @@ def index():
             scoreAway = i.find_all('div', attrs={'class':'ScoreCell__Score h4 clr-gray-01 fw-heavy tar ScoreCell_Score--scoreboard pl2'})[0].text
             teamHome = i.find_all('div', attrs={'class':'ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db'})[1].text
             scoreHome = i.find_all('div', attrs={'class':'ScoreCell__Score h4 clr-gray-01 fw-heavy tar ScoreCell_Score--scoreboard pl2'})[1].text
-
+            
             diference = abs( int(scoreAway) - int(scoreHome) )
 
             teamA.append(teamAway); teamH.append(teamHome); scores.append(diference)
@@ -57,7 +57,7 @@ def index():
         dia = data.strftime("%d") #str(data.day)
         diaAnterior = int(dia)-1
         dia = str(diaAnterior)
-        dia = "0"+dia #adiciona um 0 a esquerda
+        #dia = "0"+dia #adiciona um 0 a esquerda
 
         datetime = ano+mes+dia
 
