@@ -2,9 +2,78 @@
 <!--criamos um bloco de conteúdo a ser interpretado pelo python-->
 {% block conteudo %}
 
-    {% for i in range(tam) %}
-        <p class="text-center">{{ teamA[i] }} x {{ teamH[i] }} teve uma diferença no placar de {{ scores[i] }} gols</p>
-    {% endfor %}
+<div id="accordion" class="d-flex justify-content-center">
+    <div class="card">
+      <div class="card-header text-center" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png&w=64&h=64&scale=crop&cquality=40&location=origin" alt="">
+            NBA
+        </button>
+        </h5>
+      </div>
+  
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Away</th>
+                        <th>Home</th>
+                        <th>Diff</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(tamNBA) %}
+                    <tr>
+                        <td>{{ teamA_NBA[i] }}</td>
+                        <td>{{ teamH_NBA[i] }}</td>
+                        <td>{{ scores_NBA[i] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header text-center" id="headingTwo">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nhl.png&w=64&h=64&scale=crop&cquality=40&location=origin" alt="">
+            NHL
+         </button>
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Away</th>
+                        <th>Home</th>
+                        <th>Diff</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(tamNHL) %}
+                    <tr>
+                        <td>{{ teamA_NHL[i] }}</td>
+                        <td>{{ teamH_NHL[i] }}</td>
+                        <td>{{ scores_NHL[i] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    
+
+    
+
 
 {% endblock %}
 <!--encerramos o bloco de código a ser interpretado pelo python--

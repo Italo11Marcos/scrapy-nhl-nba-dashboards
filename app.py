@@ -20,7 +20,8 @@ app.secret_key = 'flask'
 @app.route('/', methods=['get', 'post'])
 def index():
     
-    teamA = []; teamH = []; scores = []
+    teamA_NBA = []; teamH_NBA = []; scores_NBA = []
+    teamA_NHL = []; teamH_NHL = []; scores_NHL = []
 
     def webScrappingNHL(url):
 
@@ -33,15 +34,41 @@ def index():
         
         soup = BeautifulSoup(req.content, 'html.parser')
 
-        for i in soup.find_all('div', attrs={'class':'ScoreboardScoreCell pa4 nhl ScoreboardScoreCell--post'}):
+        for i in soup.find_all('div', attrs={'class':'ScoreboardScoreCell pa4 nhl ScoreboardScoreCell--post ScoreboardScoreCell--tabletPlus'}):
             teamAway = i.find_all('div', attrs={'class':'ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db'})[0].text
             scoreAway = i.find_all('div', attrs={'class':'ScoreCell__Score h4 clr-gray-01 fw-heavy tar ScoreCell_Score--scoreboard pl2'})[0].text
             teamHome = i.find_all('div', attrs={'class':'ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db'})[1].text
             scoreHome = i.find_all('div', attrs={'class':'ScoreCell__Score h4 clr-gray-01 fw-heavy tar ScoreCell_Score--scoreboard pl2'})[1].text
             
-            diference = abs( int(scoreAway) - int(scoreHome) )
+            if scoreAway != '' or scoreHome != '':
+                diference = abs( int(scoreAway) - int(scoreHome) )
 
-            teamA.append(teamAway); teamH.append(teamHome); scores.append(diference)
+            teamA_NHL.append(teamAway); teamH_NHL.append(teamHome); scores_NHL.append(diference)
+
+            #print('{} x {} teve a diferença de {} no resultado final. '.format( teamAway, teamHome, diference ))
+
+
+    def webScrappingNBA(url):
+
+        req = requests.get(url)
+        
+        if req.status_code == 200:
+            print('Iniciando...')
+        else:
+            print('Site não encontrado =/')
+        
+        soup = BeautifulSoup(req.content, 'html.parser')
+
+        for i in soup.find_all('div', attrs={'class':'ScoreboardScoreCell pa4 nba ScoreboardScoreCell--post ScoreboardScoreCell--tabletPlus'}):
+            teamAway = i.find_all('div', attrs={'class':'ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db'})[0].text
+            scoreAway = i.find_all('div', attrs={'class':'ScoreCell__Score h4 clr-gray-01 fw-heavy tar ScoreCell_Score--scoreboard pl2'})[0].text
+            teamHome = i.find_all('div', attrs={'class':'ScoreCell__TeamName ScoreCell__TeamName--shortDisplayName truncate db'})[1].text
+            scoreHome = i.find_all('div', attrs={'class':'ScoreCell__Score h4 clr-gray-01 fw-heavy tar ScoreCell_Score--scoreboard pl2'})[1].text
+            
+            if scoreAway != '' or scoreHome != '':
+                diference = abs( int(scoreAway) - int(scoreHome) )
+
+            teamA_NBA.append(teamAway); teamH_NBA.append(teamHome); scores_NBA.append(diference)
 
             #print('{} x {} teve a diferença de {} no resultado final. '.format( teamAway, teamHome, diference ))
 
@@ -69,15 +96,25 @@ def index():
 
         print(data)
 
-        url = 'https://www.espn.com/nhl/scoreboard/_/date/{}'.format(data)
+        urlNHL = 'https://www.espn.com/nhl/scoreboard/_/date/{}'.format(data)
+        urlNBA = 'https://www.espn.com/nba/scoreboard/_/date/{}'.format(data)
 
-        webScrappingNHL(url)
+        webScrappingNBA(urlNBA)
+        webScrappingNHL(urlNHL)
 
     main()
 
-    tam = len(teamA)
+    tamNBA = len(teamA_NBA)
+    tamNHL = len(teamA_NHL)
 
-    return render_template('index.html', teamA=teamA, teamH=teamH, scores=scores, tam=tam)
+    return render_template('index.html', teamA_NHL=teamA_NHL, 
+                                         teamH_NHL=teamH_NHL, 
+                                         scores_NHL=scores_NHL, 
+                                         tamNHL=tamNHL,
+                                         teamA_NBA=teamA_NBA, 
+                                         teamH_NBA=teamH_NBA, 
+                                         scores_NBA=scores_NBA, 
+                                         tamNBA=tamNBA)
 
 if __name__ == "__main__":
     app.run(debug=True)
